@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "com.aillieo.easy-events": "https://github.com/aillieo/EasyEvent.git#upm",
+    "com.aillieo.easy-object-pool": "https://github.com/aillieo/EasyObjectPool.git#upm",
+    "com.aillieo.easy-scheduler": "https://github.com/aillieo/EasyScheduler.git#upm",
+    "com.aillieo.unity-singleton": "https://github.com/aillieo/UnitySingleton.git#upm",
+    "com.aillieo.unity-type-ext-pack": "https://github.com/aillieo/UnityTypeExtPack.git#upm",
+    "com.unity.test-framework": "1.1.18",
+    "com.unity.ugui": "1.0.0",
+    "com.unity.modules.imgui": "1.0.0"
+  }
+}

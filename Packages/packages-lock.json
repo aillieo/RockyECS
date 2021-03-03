@@ -1,0 +1,87 @@
+{
+  "dependencies": {
+    "com.aillieo.easy-events": {
+      "version": "https://github.com/aillieo/EasyEvent.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "49748580241f34c9b605f26998bd31118845e0e7"
+    },
+    "com.aillieo.easy-object-pool": {
+      "version": "https://github.com/aillieo/EasyObjectPool.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "c2d4e48450d0fdcebc1ea659ba48e3851beed4dc"
+    },
+    "com.aillieo.easy-scheduler": {
+      "version": "https://github.com/aillieo/EasyScheduler.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {
+        "com.aillieo.easy-events": "https://github.com/aillieo/EasyEvent.git#upm",
+        "com.aillieo.unity-singleton": "https://github.com/aillieo/UnitySingleton.git#upm"
+      },
+      "hash": "2a26deed3f8b6db0ad5fef5e31d0db787106de07"
+    },
+    "com.aillieo.unity-singleton": {
+      "version": "https://github.com/aillieo/UnitySingleton.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "72acce70f260dfd549ca237d9141465a1910ac0a"
+    },
+    "com.aillieo.unity-type-ext-pack": {
+      "version": "https://github.com/aillieo/UnityTypeExtPack.git#upm",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "56496a2ada0a68a31d1245e241716bfbe634c592"
+    },
+    "com.unity.ext.nunit": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.test-framework": {
+      "version": "1.1.18",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.ext.nunit": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ugui": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {
+        "com.unity.modules.ui": "1.0.0",
+        "com.unity.modules.imgui": "1.0.0"
+      }
+    },
+    "com.unity.modules.imgui": {
+      "version": "1.0.0",
+      "depth": 0,
+      "source": "builtin",
+      "dependencies": {}
+    },
+    "com.unity.modules.jsonserialize": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {}
+    },
+    "com.unity.modules.ui": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "builtin",
+      "dependencies": {}
+    }
+  }
+}

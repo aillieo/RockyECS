@@ -1,0 +1,19 @@
+{
+    "name": "RockyECS",
+    "references": [
+        "AillieoUtils.UnityTypeExtPack",
+        "AillieoUtils.EasyScheduler",
+        "AillieoUtils.EasyObjectPool",
+        "AillieoUtils.EasyEvents",
+        "AillieoUtils.UnitySingleton"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
