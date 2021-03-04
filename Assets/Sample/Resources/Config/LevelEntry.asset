@@ -1,0 +1,131 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60e18eedb92cdad4f958b6a92991f765, type: 3}
+  m_Name: LevelEntry
+  m_EditorClassIdentifier: 
+  id: 1
+  levelName: Stage_0
+  mapDataPath: 
+  mapEntityPath: 
+  waveInfo:
+    waves:
+    - delay: 1.2
+      monsterID: 1001
+      count: 2
+      interval: 1
+    - delay: 3
+      monsterID: 1001
+      count: 3
+      interval: 1
+    - delay: 3
+      monsterID: 1001
+      count: 3
+      interval: 1
+  mapData:
+    mapName: plain_0
+    width: 17
+    height: 11
+    pathTiles:
+    - id: 0
+      position: {x: 0, y: 9}
+      type: 2
+    - id: 1
+      position: {x: 4, y: 9}
+      type: 1
+    - id: 2
+      position: {x: 4, y: 6}
+      type: 1
+    - id: 3
+      position: {x: 10, y: 6}
+      type: 1
+    - id: 4
+      position: {x: 10, y: 9}
+      type: 1
+    - id: 5
+      position: {x: 14, y: 9}
+      type: 1
+    - id: 6
+      position: {x: 14, y: 5}
+      type: 1
+    - id: 7
+      position: {x: 16, y: 5}
+      type: 1
+    - id: 8
+      position: {x: 16, y: 2}
+      type: 1
+    - id: 9
+      position: {x: 10, y: 2}
+      type: 1
+    - id: 10
+      position: {x: 10, y: 4}
+      type: 1
+    - id: 11
+      position: {x: 2, y: 4}
+      type: 1
+    - id: 12
+      position: {x: 2, y: 2}
+      type: 1
+    - id: 13
+      position: {x: 0, y: 2}
+      type: 4
+    functionTiles:
+    - id: 0
+      position: {x: 1, y: 1}
+      type: 16
+    - id: 1
+      position: {x: 14, y: 1}
+      type: 16
+    - id: 2
+      position: {x: 1, y: 3}
+      type: 16
+    - id: 3
+      position: {x: 4, y: 3}
+      type: 16
+    - id: 4
+      position: {x: 6, y: 3}
+      type: 16
+    - id: 5
+      position: {x: 8, y: 3}
+      type: 16
+    - id: 6
+      position: {x: 11, y: 3}
+      type: 16
+    - id: 7
+      position: {x: 13, y: 3}
+      type: 16
+    - id: 8
+      position: {x: 14, y: 4}
+      type: 16
+    - id: 9
+      position: {x: 6, y: 5}
+      type: 16
+    - id: 10
+      position: {x: 3, y: 7}
+      type: 16
+    - id: 11
+      position: {x: 5, y: 7}
+      type: 16
+    - id: 12
+      position: {x: 7, y: 7}
+      type: 16
+    - id: 13
+      position: {x: 9, y: 7}
+      type: 16
+    - id: 14
+      position: {x: 1, y: 8}
+      type: 16
+    - id: 15
+      position: {x: 11, y: 8}
+      type: 16
+    - id: 16
+      position: {x: 13, y: 8}
+      type: 16

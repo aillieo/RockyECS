@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d16fce27e801ea41a5483a4dc802370, type: 3}
+  m_Name: TowerEntry
+  m_EditorClassIdentifier: 
+  id: 1000
+  towerType: 0
+  level: 0
+  nextLevel: 1
+  cost: 100
+  sell: 50
+  name: Arrow_0
+  range: 200
+  damage: 100
+  preAttack: 0.6
+  postAttack: 0.4
+  icon: btn_icon_arrow
+  recipe: Sample.TR_Simple
+  asset: Prefabs/Tower/TowerTest
