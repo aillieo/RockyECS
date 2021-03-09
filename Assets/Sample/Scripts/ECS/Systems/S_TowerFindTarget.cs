@@ -24,7 +24,7 @@ namespace Sample
                     using (var scope = ListPool<Entity>.GetAutoRecycleScope())
                     {
                         List<Entity> list = scope.Get();
-                        Container.Instance.Find<C_IdentifyMonster>(e =>
+                        selection.container.Find<C_IdentifyMonster>(e =>
                         {
                             if ((e.GetPosition() - s.GetPosition()).sqrMagnitude <= c.range * c.range)
                             {

@@ -6,21 +6,11 @@ namespace RockyECS
     public sealed class Entity
     {
         public static readonly int invalid = -1;
-        private bool raw = true;
 
         public int id { get; private set; }
 
-        public void Init()
-        {
-            Assert.IsTrue(raw);
-            raw = false;
-        }
-
         public void CleanUp()
         {
-            Assert.IsFalse(raw);
-            raw = true;
-
             components.Clear();
         }
 
@@ -40,11 +30,7 @@ namespace RockyECS
 
         public T AddComp<T>() where T : class, IComponent, new()
         {
-            T component = components.Add<T>();
-            if (!raw)
-            {
-            }
-            return component;
+            return components.Add<T>();
         }
 
         public T GetComp<T>() where T : class, IComponent
@@ -62,7 +48,7 @@ namespace RockyECS
             return entity == null || entity.id == invalid;
         }
 
-        public static readonly Pool<Entity> pool = Pool<Entity>.Create()
+        internal static readonly Pool<Entity> pool = Pool<Entity>.Create()
                 .SetSizeMax(512)
                 .SetCreateFunc(()=>new Entity())
                 .SetOnRecycle(entity => {

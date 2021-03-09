@@ -7,7 +7,7 @@ namespace Sample
     {
         public override void SetupMonster(Entity monster)
         {
-            MonsterEntry metaMonster = monster.GetComp<C_MonsterConfig>().cfg;
+            MonsterEntry monsterEntry = monster.GetComp<C_MonsterConfig>().cfg;
 
             C_MonsterFindPath monsterFindPath = monster.AddComp<C_MonsterFindPath>();
             Entity e = RockyECS.Container.Instance.SelectOne<C_LevelData>();
@@ -17,15 +17,15 @@ namespace Sample
 
 
             monster.AddComp<C_TargetPos>();
-            monster.AddComp<C_MoveToPos>().speed = metaMonster.speed / 100f;
+            monster.AddComp<C_MoveToPos>().speed = monsterEntry.speed / 100f;
             monster.AddComp<C_MoveStart>();
 
             C_MonsterHp hp = monster.AddComp<C_MonsterHp>();
-            int h = metaMonster.hp / 100;
+            int h = monsterEntry.hp / 100;
             hp.max = h;
             hp.rest = h;
 
-            monster.AddComp<C_Asset>().asset = metaMonster.asset;
+            monster.AddComp<C_Asset>().mesh = monsterEntry.asset;
             monster.AddComp<C_GameObject>();
         }
     }

@@ -11,17 +11,16 @@ namespace Sample
             collider.onClick = () => SimpleOnClick(slot.id);
             collider.threshold = 0.15f;
 
-
             slot.AddComp<C_Renderer>();
 
             slot.AddComp<C_GameObject>();
-            slot.AddComp<C_Asset>().asset = "Prefabs/Tower/TowerSlot";
+            slot.AddComp<C_Asset>().mesh = "Prefabs/Tower/TowerSlot";
         }
 
         private void SimpleOnClick(int e)
         {
-            var context = Container.Instance;
-            Entity unitObj = context.Get(e);
+            var container = Container.Instance;
+            Entity unitObj = container.Get(e);
             if (unitObj == null)
                 return;
 
@@ -29,9 +28,8 @@ namespace Sample
 
             Entity tower = Factory.CreateTower(CfgProxy.Instance.Get<TowerEntry>(1000));
 
-            context.Remove(e);
+            container.Remove(e);
             tower.SetPosition(position);
-            context.Add(tower);
         }
     }
 }

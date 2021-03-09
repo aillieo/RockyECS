@@ -4,11 +4,11 @@ namespace Sample
 {
     public class GameRenderer : SingletonMonoBehaviour<GameRenderer>
     {
-        public Event renderEvent = new Event();
+        public Event<int> renderEvent = new Event<int>();
 
         private void Update()
         {
-            this.renderEvent?.Invoke();
+            this.renderEvent?.Invoke(0);
         }
     }
 }

@@ -26,8 +26,9 @@ namespace Sample
 
                 if (c.target.Next == null)
                 {
-                    OnArrive();
-                    Container.Instance.Remove(s.id);
+                    C_PlayerProperties p = selection.container.SelectOne<C_PlayerProperties>().GetComp<C_PlayerProperties>();
+                    OnArrive(p);
+                    selection.container.Remove(s.id);
                     return;
                 }
 
@@ -48,16 +49,11 @@ namespace Sample
             }
         }
 
-        private void OnArrive()
+        private void OnArrive(C_PlayerProperties p)
         {
-            List<Entity> list = ListPool<Entity>.Get();
-            Container.Instance.Find<C_IdentifyPlayer>(null, list, 1);
-            Entity player = list[0];
-            ListPool<Entity>.Recycle(list);
-            C_PlayerProperties c = player.GetComp<C_PlayerProperties>();
-            c.hpRest -= 1;
-            c.hpRest = Mathf.Max(c.hpRest, 0);
-            Debug.LogError($"c.hpRest = {c.hpRest}");
+            p.hpRest -= 1;
+            p.hpRest = Mathf.Max(p.hpRest, 0);
+            Debug.LogError($"c.hpRest = {p.hpRest}");
         }
     }
 }

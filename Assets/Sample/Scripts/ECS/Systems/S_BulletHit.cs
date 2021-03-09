@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AillieoUtils;
 using RockyECS;
 using UnityEngine;
@@ -21,9 +22,26 @@ namespace Sample
                 {
                     C_MonsterHp hp = target.GetComp<C_MonsterHp>();
                     //Debug.LogError($" 子弹{s.id} 击中 敌人{target.id}！");
-                    hp.OnDamage(target, 1);
+                    OnDamage(target, 1, hp, selection.container);
                 }
-                Container.Instance.Remove(s.id);
+                selection.container.Remove(s.id);
+            }
+        }
+
+        private void OnDamage(Entity target, int damage, C_MonsterHp hp, Container container)
+        {
+            hp.rest -= damage;
+            if (hp.rest == 0)
+            {
+                C_MonsterBonus bonus = target.GetComp<C_MonsterBonus>();
+                int value = bonus != null ? bonus.value : 0;
+                if (container.Remove(target.id))
+                {
+                    List<Entity> list = ListPool<Entity>.Get();
+                    container.Find<C_IdentifyPlayer>(null, list, 1);
+                    list.First().GetComp<C_PlayerProperties>().coins += value;
+                    ListPool<Entity>.Recycle(list);
+                }
             }
         }
 

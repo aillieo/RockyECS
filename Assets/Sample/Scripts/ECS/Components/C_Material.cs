@@ -1,14 +1,13 @@
 using RockyECS;
+using UnityEngine;
 
 namespace Sample
 {
-    public class C_Asset : IComponent
+    public class C_Material : IComponent
     {
-        public string mesh;
-        public string material;
+        public Material material;
         public void Reset()
         {
-            mesh = null;
             material = null;
         }
     }

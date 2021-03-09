@@ -16,8 +16,7 @@ namespace Sample
             C_LevelData c = null;
             if (selection.FirstOrDefault() == null)
             {
-                Entity e = Entity.pool.Get();
-                RockyECS.Container.Instance.Add(e);
+                Entity e = selection.container.Add();
                 c = e.AddComp<C_LevelData>();
             }
             else
@@ -46,10 +45,9 @@ namespace Sample
                     c.loadingFlag++;
                     break;
                 case 20:
-                    var player = Entity.pool.Get();
+                    var player = selection.container.Add();
                     player.AddComp<C_PlayerProperties>();
                     player.AddComp<C_IdentifyPlayer>();
-                    RockyECS.Container.Instance.Add(player);
                     c.loadingFlag++;
                     break;
                 case 28:
@@ -60,7 +58,6 @@ namespace Sample
                             case GameDefine.TileType.Slot:
                                 Entity slot = Factory.CreateSlot(Recipe.Get<SR_Simple>() as SlotRecipe);
                                 slot.SetPosition(tileData.position);
-                                Container.Instance.Add(slot);
                                 break;
                             default:
                                 break;

@@ -7,7 +7,7 @@ namespace RockyECS
     internal class ComponentCollection
     {
         private readonly Entity owner;
-        public ComponentCollection(Entity entity)
+        internal ComponentCollection(Entity entity)
         {
             owner = entity;
         }

@@ -5,10 +5,10 @@ using AillieoUtils;
 namespace RockyECS
 {
 
-    public static class ComponentPool
+    internal static class ComponentPool
     {
         private static readonly Dictionary<Type,object> pools = new Dictionary<Type, object>();
-        public static T Get<T>() where T : class, IComponent, new()
+        internal static T Get<T>() where T : class, IComponent, new()
         {
             object pool;
             if (!pools.TryGetValue(typeof(T), out pool))
@@ -25,7 +25,7 @@ namespace RockyECS
             return component;
         }
 
-        public static void Recycle<T>(T component) where T : IComponent
+        internal static void Recycle<T>(T component) where T : IComponent
         {
             object pool;
             if (pools.TryGetValue(component.GetType(), out pool))

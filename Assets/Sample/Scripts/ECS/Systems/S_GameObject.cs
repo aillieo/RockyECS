@@ -15,9 +15,9 @@ namespace Sample
                 if (c.gameObject == null)
                 {
                     C_Asset asset = s.GetComp<C_Asset>();
-                    if (!string.IsNullOrWhiteSpace(asset.asset))
+                    if (!string.IsNullOrWhiteSpace(asset.mesh))
                     {
-                        var prefab = ResourceManager.Instance.LoadAsset<GameObject>(asset.asset);
+                        var prefab = ResourceManager.Instance.LoadAsset<GameObject>(asset.mesh);
                         c.gameObject = GameObjectPool.Get(prefab);
                     }
                 }

@@ -8,15 +8,6 @@ namespace RockyECS
 {
     public class Container : Singleton<Container>
     {
-        private class EntityComparer : IComparer<Entity>
-        {
-            public int Compare(Entity x, Entity y)
-            {
-                return x.id.CompareTo(y.id);
-            }
-        }
-        private readonly EntityComparer entityComparer = new EntityComparer();
-
         private readonly Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
 
         private readonly Dictionary<Type, Event<Entity>> onAddOrRemoveComp = new Dictionary<Type, Event<Entity>>();
@@ -34,14 +25,30 @@ namespace RockyECS
             }
         }
 
-        public void Add(Entity entity)
+        internal Selection CreateSelection(Filter filter)
         {
-            if (!entities.ContainsKey(entity.id))
+            Selection selection = new Selection(this, filter);
+            foreach (var t in selection.filter.AssociatedCompTypes())
             {
-                entity.Init();
-
-                entities.Add(entity.id, entity);
+                ListenAddOrRemoveEventForType(t, e => selection.MarkDirtyEntity(e));
             }
+            selection.ReSelect(entities.Select(p => p.Value));
+            return selection;
+        }
+
+        internal void DisposeSelection(Selection selection)
+        {
+            foreach (var t in selection.filter.AssociatedCompTypes())
+            {
+                // todo remove listeners
+            }
+        }
+
+        public Entity Add()
+        {
+            Entity entity = Entity.pool.Get();
+            entities.Add(entity.id, entity);
+            return entity;
         }
 
         public bool Remove(int id)
@@ -75,6 +82,7 @@ namespace RockyECS
             entities.Clear();
         }
 
+        // todo 未来要删掉
         public void Find<T>(Predicate<Entity> filter, List<Entity> result, int count = int.MaxValue) where T : class, IComponent
         {
             result.Clear();
@@ -94,16 +102,13 @@ namespace RockyECS
             }
         }
 
-        public void Fill(Selection selection)
-        {
-            selection.ReSelect(entities.Select(p => p.Value));
-        }
-
+        // todo 不通过selection来取
         public Entity SelectOne<T>() where T : class, IComponent
         {
-            Selection selection = new Selection(new Filter<T>());
-            selection.ReSelect(entities.Select(p => p.Value));
-            return selection.FirstOrDefault();
+            Selection selection = CreateSelection(new Filter<T>());
+            Entity entity = selection.FirstOrDefault();
+            DisposeSelection(selection);
+            return entity;
         }
 
     }

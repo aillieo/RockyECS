@@ -23,6 +23,7 @@ namespace RockyECS
         private readonly List<IFilteredFrameUpdatingSystem> frameUpdatingSystems = new List<IFilteredFrameUpdatingSystem>();
 
         private readonly Dictionary<ISelectionProvider, Selection> cachedSelections = new Dictionary<ISelectionProvider, Selection>();
+        private readonly Container container = Container.Instance; // new Container();
 
         public SystemScheduler()
         {
@@ -53,13 +54,7 @@ namespace RockyECS
 
             if(system is ISelectionProvider isp)
             {
-                Selection selection = new Selection(isp.CreateFilter());
-
-                foreach (var t in selection.CorrespondingFilter.AssociatedCompTypes())
-                {
-                    Container.Instance.ListenAddOrRemoveEventForType(t, e => selection.MarkDirtyEntity(e));
-                }
-                Container.Instance.Fill(selection);
+                Selection selection = container.CreateSelection(isp.CreateFilter());
                 cachedSelections.Add(isp, selection);
             }
 

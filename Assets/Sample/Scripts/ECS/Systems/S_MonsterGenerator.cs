@@ -94,7 +94,6 @@ namespace Sample
 
                 MonsterEntry mm = CfgProxy.Instance.Get<MonsterEntry>(current.monsterID);
                 Entity monster = Factory.CreateMonster(mm);
-                Container.Instance.Add(monster);
 
                 counter++;
 

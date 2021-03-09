@@ -26,7 +26,6 @@ namespace Sample
                     {
                         c.timer -= (c.preAttack + c.postAttack);
                         Entity bullet = Factory.CreateBullet(c.recipe);
-                        Container.Instance.Add(bullet);
                         bullet.SetPosition(s.GetPosition());
                         bullet.GetComp<C_TargetPos>().targetPos = target.GetPosition();
                         bullet.GetComp<C_Target>().target = s.GetComp<C_Target>().target;
