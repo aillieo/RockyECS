@@ -13,8 +13,9 @@ namespace Sample
 
             slot.AddComp<C_Renderer>();
 
-            slot.AddComp<C_GameObject>();
-            slot.AddComp<C_Asset>().mesh = "Prefabs/Tower/TowerSlot";
+            C_Asset asset = slot.AddComp<C_Asset>();
+            asset.mesh = "Mesh/TowerSlot";
+            asset.material = "Materials/Default";
         }
 
         private void SimpleOnClick(int e)

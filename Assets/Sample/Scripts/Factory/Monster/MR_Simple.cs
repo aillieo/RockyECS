@@ -25,8 +25,11 @@ namespace Sample
             hp.max = h;
             hp.rest = h;
 
-            monster.AddComp<C_Asset>().mesh = monsterEntry.asset;
-            monster.AddComp<C_GameObject>();
+            C_Asset asset = monster.AddComp<C_Asset>();
+            asset.mesh = "Mesh/MonsterTest"; // monsterEntry.asset;
+            asset.material = "Materials/Red";
+
+            monster.AddComp<C_Renderer>();
         }
     }
 }

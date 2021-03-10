@@ -8,6 +8,10 @@ namespace Sample
         public Material material;
         public void Reset()
         {
+            if(material != null)
+            {
+
+            }
             material = null;
         }
     }

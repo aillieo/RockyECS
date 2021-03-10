@@ -8,8 +8,9 @@ namespace Sample
         {
             TowerEntry towerEntry = tower.GetComp<C_TowerConfig>().cfg;
 
-            tower.AddComp<C_GameObject>();
-            tower.AddComp<C_Asset>().mesh = towerEntry.asset;
+            C_Asset asset = tower.AddComp<C_Asset>();
+            asset.mesh = "Mesh/TowerTest"; // towerEntry.asset;
+            asset.material = "Materials/Blue";
 
             tower.AddComp<C_Renderer>();
 

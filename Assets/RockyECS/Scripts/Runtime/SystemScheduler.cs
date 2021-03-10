@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RockyECS
 {
-    public class SystemScheduler : Singleton<SystemScheduler>
+    public class SystemScheduler
     {
         public readonly Event<float> onTimeScaleChanged = new Event<float>();
 

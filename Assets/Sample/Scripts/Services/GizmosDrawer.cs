@@ -24,7 +24,7 @@ namespace Sample
 
         private void DrawPath()
         {
-            Entity e = RockyECS.Container.Instance.SelectOne<C_LevelData>();
+            Entity e = Container.Instance.SelectOne<C_LevelData>();
             LinkedList<LevelEntry.TileData> paths = e.GetComp<C_LevelData>().paths;
 
             Color c = Gizmos.color;

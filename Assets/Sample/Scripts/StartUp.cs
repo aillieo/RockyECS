@@ -7,7 +7,7 @@ namespace Sample
     {
         private void Start()
         {
-            SystemScheduler.Instance
+            new SystemScheduler()
                 .AddSystem<S_LevelLoad>()
                 .AddSystem<S_MonsterGenerator>()
                 .AddSystem<S_MonsterFindPath>()
@@ -16,9 +16,10 @@ namespace Sample
                 .AddSystem<S_MoveToTarget>()
                 .AddSystem<S_TowerFindTarget>()
                 .AddSystem<S_TowerAttack>()
-                .AddSystem<S_GameObject>()
+                .AddSystem<S_ResLoad>()
                 .AddSystem<S_ClickDispatcher>()
                 .AddSystem<S_ClickHandler>()
+                .AddSystem<S_Rendering>()
                 .AddSystem<S_MonsterGUIDrawer>()
                 .AddSystem<S_GizmosDrawer>()
                 .AddSystem<S_TowerFindTargetGizmos>()

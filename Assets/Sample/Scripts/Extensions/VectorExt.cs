@@ -1,4 +1,4 @@
-﻿using Sample;
+using Sample;
 using UnityEngine;
 
 public static class VectorExt
@@ -20,6 +20,6 @@ public static class VectorExt
 
     public static float ToRotation(this Vector2 direction)
     {
-        return Vector2.SignedAngle(Vector2.up, direction);
+        return Vector2.SignedAngle(direction, Vector2.up);
     }
 }

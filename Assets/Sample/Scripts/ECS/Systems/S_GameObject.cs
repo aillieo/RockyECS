@@ -25,7 +25,7 @@ namespace Sample
                 if (c.gameObject != null)
                 {
                     c.gameObject.transform.position = s.GetPosition().ToVec3();
-                    c.gameObject.transform.rotation = Quaternion.Euler(-Vector3.up * s.GetRotation());
+                    c.gameObject.transform.rotation = Quaternion.Euler(Vector3.up * s.GetRotation());
                 }
 
             }
