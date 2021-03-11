@@ -3,11 +3,8 @@ using System;
 
 namespace Sample
 {
-    public class C_Collider: IComponent
+    public class C_ClickToBuild : IComponent
     {
-        public float threshold = 3f;
-
-
         public void Reset()
         {
         }

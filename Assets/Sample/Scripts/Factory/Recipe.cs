@@ -6,11 +6,11 @@ namespace Sample
 {
     public abstract class Recipe
     {
-        public abstract void SetupUnit(Entity e);
+        public abstract void Setup(Entity e, Context context);
 
         private static readonly Dictionary<string, Recipe> collection = new Dictionary<string, Recipe>(StringComparer.OrdinalIgnoreCase);
 
-        public static Recipe Get<T>() where T : Recipe, new()
+        public static T Get<T>() where T : Recipe, new()
         {
             Recipe recipe = default;
             string typeName = typeof(T).FullName;
@@ -19,7 +19,7 @@ namespace Sample
                 recipe = new T();
                 collection.Add(typeName, recipe);
             }
-            return recipe;
+            return recipe as T;
         }
 
         public static Recipe Get(string recipeName)

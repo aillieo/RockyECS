@@ -6,11 +6,18 @@ using AillieoUtils.TypeExt;
 
 namespace RockyECS
 {
-    public class Container : Singleton<Container>
+    public class Context
     {
         private readonly Dictionary<int, Entity> entities = new Dictionary<int, Entity>();
 
         private readonly Dictionary<Type, Event<Entity>> onAddOrRemoveComp = new Dictionary<Type, Event<Entity>>();
+
+        private readonly Pool<Entity> pool;
+
+        internal Context()
+        {
+            pool = Entity.CreatePool(this);
+        }
 
         internal Handle<Entity> ListenAddOrRemoveEventForType(Type compType, Action<Entity> action)
         {
@@ -46,7 +53,7 @@ namespace RockyECS
 
         public Entity Add()
         {
-            Entity entity = Entity.pool.Get();
+            Entity entity = pool.Get();
             entities.Add(entity.id, entity);
             return entity;
         }
@@ -59,7 +66,7 @@ namespace RockyECS
                 entity.CleanUp();
 
                 entities.Remove(id);
-                Entity.pool.Recycle(entity);
+                pool.Recycle(entity);
 
                 return true;
             }
@@ -77,7 +84,7 @@ namespace RockyECS
             foreach (var entity in entities)
             {
                 entity.Value.CleanUp();
-                Entity.pool.Recycle(entity.Value);
+                pool.Recycle(entity.Value);
             }
             entities.Clear();
         }

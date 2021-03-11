@@ -15,7 +15,7 @@ namespace Sample
             {
                 C_TowerAttack c = s.GetComp<C_TowerAttack>();
 
-                Entity target = s.GetComp<C_Target>().GetEntity();
+                Entity target = s.GetComp<C_Target>().TargetAsEntity(selection.context);
 
                 //UnityEngine.Debug.LogError("Entity.IsNullOrInvalid(target) =" + Entity.IsNullOrInvalid(target));
                 if (!Entity.IsNullOrInvalid(target))
@@ -25,7 +25,7 @@ namespace Sample
                     if (c.timer > c.preAttack)
                     {
                         c.timer -= (c.preAttack + c.postAttack);
-                        Entity bullet = Factory.CreateBullet(c.recipe);
+                        Entity bullet = Factory.Create(c.bulletRecipe, selection.context);
                         bullet.SetPosition(s.GetPosition());
                         bullet.GetComp<C_TargetPos>().targetPos = target.GetPosition();
                         bullet.GetComp<C_Target>().target = s.GetComp<C_Target>().target;

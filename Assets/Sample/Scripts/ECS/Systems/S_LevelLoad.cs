@@ -16,7 +16,7 @@ namespace Sample
             C_LevelData c = null;
             if (selection.FirstOrDefault() == null)
             {
-                Entity e = selection.container.Add();
+                Entity e = selection.context.Add();
                 c = e.AddComp<C_LevelData>();
             }
             else
@@ -45,7 +45,7 @@ namespace Sample
                     c.loadingFlag++;
                     break;
                 case 20:
-                    var player = selection.container.Add();
+                    var player = selection.context.Add();
                     player.AddComp<C_PlayerProperties>();
                     player.AddComp<C_IdentifyPlayer>();
                     c.loadingFlag++;
@@ -56,7 +56,7 @@ namespace Sample
                         switch (tileData.type)
                         {
                             case GameDefine.TileType.Slot:
-                                Entity slot = Factory.CreateSlot(Recipe.Get<SR_Simple>() as SlotRecipe);
+                                Entity slot = Factory.Create(Recipe.Get<SlotRecipe>(), selection.context);
                                 slot.SetPosition(tileData.position);
                                 break;
                             default:

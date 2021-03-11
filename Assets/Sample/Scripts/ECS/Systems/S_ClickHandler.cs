@@ -1,4 +1,5 @@
 using RockyECS;
+using UnityEngine;
 
 namespace Sample
 {
@@ -6,7 +7,7 @@ namespace Sample
     {
         public Filter CreateFilter()
         {
-            return new Filter<C_ClickEvent>();
+            return new Filter<C_ClickEvent>() & new Filter<C_ClickToBuild>();
         }
 
         public void FrameUpdate(Selection selection, float deltaTime)
@@ -19,9 +20,19 @@ namespace Sample
                     continue;
                 }
 
-                s.GetComp<C_Collider>().onClick?.Invoke();
+                BuildTower(s, selection.context);
                 s.RemoveComp(c);
             }
+        }
+
+        private void BuildTower(Entity entity, Context context)
+        {
+            Vector2 position = entity.GetPosition();
+
+            Entity tower = Factory.CreateTower(CfgProxy.Instance.Get<TowerEntry>(1000), context);
+
+            context.Remove(entity.id);
+            tower.SetPosition(position);
         }
     }
 

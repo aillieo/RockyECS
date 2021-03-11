@@ -7,6 +7,9 @@ namespace Sample
 {
     public class S_MonsterGenerator : BaseSystem, IFilteredUpdatingSystem
     {
+
+        Context context;
+
         public Filter CreateFilter()
         {
             return new Filter<C_LevelData>();
@@ -14,6 +17,12 @@ namespace Sample
 
         public void Update(Selection selection, float deltaTime)
         {
+            if(context == null)
+            {
+                context = selection.context;
+            }
+
+
             foreach (var s in selection)
             {
             }
@@ -93,7 +102,7 @@ namespace Sample
                 timer -= current.interval;
 
                 MonsterEntry mm = CfgProxy.Instance.Get<MonsterEntry>(current.monsterID);
-                Entity monster = Factory.CreateMonster(mm);
+                Entity monster = Factory.CreateMonster(mm, context);
 
                 counter++;
 

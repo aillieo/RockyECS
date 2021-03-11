@@ -19,12 +19,12 @@ namespace Sample
 
                 C_Target cTarget = s.GetComp<C_Target>();
 
-                if (Entity.IsNullOrInvalid(cTarget.GetEntity()))
+                if (Entity.IsNullOrInvalid(cTarget.TargetAsEntity(selection.context)))
                 {
                     using (var scope = ListPool<Entity>.GetAutoRecycleScope())
                     {
                         List<Entity> list = scope.Get();
-                        selection.container.Find<C_IdentifyMonster>(e =>
+                        selection.context.Find<C_IdentifyMonster>(e =>
                         {
                             if ((e.GetPosition() - s.GetPosition()).sqrMagnitude <= c.range * c.range)
                             {
@@ -42,13 +42,13 @@ namespace Sample
                 }
                 else
                 {
-                    if ((cTarget.GetEntity().GetPosition() - s.GetPosition()).sqrMagnitude > c.range * c.range)
+                    if ((cTarget.TargetAsEntity(selection.context).GetPosition() - s.GetPosition()).sqrMagnitude > c.range * c.range)
                     {
                         cTarget.target = Entity.invalid;
                     }
                     else
                     {
-                        s.SetRotation((cTarget.GetEntity().GetPosition() - s.GetPosition()).ToRotation());
+                        s.SetRotation((cTarget.TargetAsEntity(selection.context).GetPosition() - s.GetPosition()).ToRotation());
                     }
                 }
 

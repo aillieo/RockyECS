@@ -25,7 +25,7 @@ namespace RockyECS
             return component;
         }
 
-        internal static void Recycle<T>(T component) where T : IComponent
+        internal static void Recycle(IComponent component)
         {
             object pool;
             if (pools.TryGetValue(component.GetType(), out pool))

@@ -7,13 +7,13 @@ namespace RockyECS
 {
     public class Selection : IEnumerable<Entity>
     {
-        internal Selection(Container container, Filter filter)
+        internal Selection(Context context, Filter filter)
         {
-            this.container = container;
+            this.context = context;
             this.filter = filter;
         }
 
-        public readonly Container container;
+        public readonly Context context;
         internal readonly Filter filter;
 
         private readonly List<Entity> cachedEntities = new List<Entity>();

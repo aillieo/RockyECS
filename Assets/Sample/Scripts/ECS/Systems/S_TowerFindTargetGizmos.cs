@@ -22,7 +22,7 @@ namespace Sample
 
             foreach (var s in selection)
             {
-                Entity target = s.GetComp<C_Target>().GetEntity();
+                Entity target = s.GetComp<C_Target>().TargetAsEntity(selection.context);
                 if (!Entity.IsNullOrInvalid(target))
                 {
                     Vector3 p0 = s.GetPosition().ToVec3();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace RockyECS
 {
-    public class SystemScheduler
+    public class Engine
     {
         public readonly Event<float> onTimeScaleChanged = new Event<float>();
 
@@ -23,20 +23,20 @@ namespace RockyECS
         private readonly List<IFilteredFrameUpdatingSystem> frameUpdatingSystems = new List<IFilteredFrameUpdatingSystem>();
 
         private readonly Dictionary<ISelectionProvider, Selection> cachedSelections = new Dictionary<ISelectionProvider, Selection>();
-        private readonly Container container = Container.Instance; // new Container();
+        private readonly Context context = new Context();
 
-        public SystemScheduler()
+        public Engine()
         {
             Scheduler.ScheduleUpdate(Update);
         }
 
-        public SystemScheduler AddSystem<T>() where T : ISystem
+        public Engine AddSystem<T>() where T : ISystem
         {
             T sys = Activator.CreateInstance<T>();
             return AddSystem(sys);
         }
 
-        private SystemScheduler AddSystem(ISystem system)
+        private Engine AddSystem(ISystem system)
         {
             if(system is ICompositeSystem composite)
             {
@@ -54,7 +54,7 @@ namespace RockyECS
 
             if(system is ISelectionProvider isp)
             {
-                Selection selection = container.CreateSelection(isp.CreateFilter());
+                Selection selection = context.CreateSelection(isp.CreateFilter());
                 cachedSelections.Add(isp, selection);
             }
 

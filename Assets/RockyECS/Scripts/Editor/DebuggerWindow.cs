@@ -33,12 +33,12 @@ namespace RockyECS.Editor
         {
             //EditorGUILayout.BeginHorizontal();
             //GUILayout.Label("Playing");
-            //bool playing = SystemScheduler.Instance.isPlaying;
-            //SystemScheduler.Instance.isPlaying = GUILayout.Toggle(playing, GUIContent.none);
+            //bool playing = Engine.Instance.isPlaying;
+            //Engine.Instance.isPlaying = GUILayout.Toggle(playing, GUIContent.none);
 
             //GUILayout.Label("Playback speed");
-            //float timeScale = SystemScheduler.Instance.timeScale;
-            //SystemScheduler.Instance.timeScale = EditorGUILayout.Slider(timeScale, 0.001f, 10);
+            //float timeScale = Engine.Instance.timeScale;
+            //Engine.Instance.timeScale = EditorGUILayout.Slider(timeScale, 0.001f, 10);
             //EditorGUILayout.EndHorizontal();
         }
 

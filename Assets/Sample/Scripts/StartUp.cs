@@ -7,7 +7,7 @@ namespace Sample
     {
         private void Start()
         {
-            new SystemScheduler()
+            new Engine()
                 .AddSystem<S_LevelLoad>()
                 .AddSystem<S_MonsterGenerator>()
                 .AddSystem<S_MonsterFindPath>()
@@ -24,6 +24,7 @@ namespace Sample
                 .AddSystem<S_GizmosDrawer>()
                 .AddSystem<S_TowerFindTargetGizmos>()
                 .AddSystem<S_BulletHit>()
+                .AddSystem<S_ClickCleanUp>()
                 ;
 
             Destroy(this);

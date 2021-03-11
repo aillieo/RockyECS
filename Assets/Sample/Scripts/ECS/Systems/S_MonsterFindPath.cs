@@ -26,9 +26,9 @@ namespace Sample
 
                 if (c.target.Next == null)
                 {
-                    C_PlayerProperties p = selection.container.SelectOne<C_PlayerProperties>().GetComp<C_PlayerProperties>();
+                    C_PlayerProperties p = selection.context.SelectOne<C_PlayerProperties>().GetComp<C_PlayerProperties>();
                     OnArrive(p);
-                    selection.container.Remove(s.id);
+                    selection.context.Remove(s.id);
                     return;
                 }
 

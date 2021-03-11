@@ -1,4 +1,4 @@
-﻿using RockyECS;
+using RockyECS;
 
 namespace Sample
 {
@@ -8,7 +8,7 @@ namespace Sample
         public float preAttack = 1f;
 
         public float timer = 0;
-        public BR_Simple recipe = new BR_Simple();
+        public Recipe bulletRecipe = Recipe.Get<BulletRecipe>();
         public void Reset()
         {
         }

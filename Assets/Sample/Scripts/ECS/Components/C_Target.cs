@@ -6,9 +6,9 @@ namespace Sample
     {
         public int target;
 
-        public Entity GetEntity()
+        public Entity TargetAsEntity(Context context)
         {
-            return Container.Instance.Get(target);
+            return context.Get(target);
         }
 
         public void Reset()
