@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Sample
 {
-    public class S_TowerFindTargetGizmos : IFilteredFrameUpdatingSystem
+    public class S_TowerFindTargetGizmos : BaseSystem, IFilteredFrameUpdatingSystem
     {
         private Handle eventHandle;
         private List<Action> gizmosActions = new List<Action>();

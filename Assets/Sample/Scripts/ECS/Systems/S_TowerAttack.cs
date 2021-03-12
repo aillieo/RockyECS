@@ -25,7 +25,7 @@ namespace Sample
                     if (c.timer > c.preAttack)
                     {
                         c.timer -= (c.preAttack + c.postAttack);
-                        Entity bullet = Factory.Create(c.bulletRecipe, selection.context);
+                        Entity bullet = selection.context.Create(c.bulletRecipe);
                         bullet.SetPosition(s.GetPosition());
                         bullet.GetComp<C_TargetPos>().targetPos = target.GetPosition();
                         bullet.GetComp<C_Target>().target = s.GetComp<C_Target>().target;

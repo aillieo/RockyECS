@@ -2,9 +2,9 @@ using RockyECS;
 
 namespace Sample
 {
-    public class SlotRecipe : Recipe
+    public class SlotRecipe : IRecipe
     {
-        public override void Setup(Entity e, Context context)
+        public void Setup(Entity e, Context context)
         {
             e.AddComp<C_Position>();
             e.AddComp<C_Rotation>();

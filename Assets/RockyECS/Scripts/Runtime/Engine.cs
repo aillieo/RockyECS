@@ -1,6 +1,7 @@
 using AillieoUtils;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace RockyECS
 {
@@ -17,7 +18,7 @@ namespace RockyECS
         private float frameTimer;
         private float mTimeScale = 1;
 
-        private readonly List<ISystem> systems = new List<ISystem>();
+        private readonly List<BaseSystem> systems = new List<BaseSystem>();
 
         private readonly List<IFilteredUpdatingSystem> updatingSystems = new List<IFilteredUpdatingSystem>();
         private readonly List<IFilteredFrameUpdatingSystem> frameUpdatingSystems = new List<IFilteredFrameUpdatingSystem>();
@@ -30,14 +31,21 @@ namespace RockyECS
             Scheduler.ScheduleUpdate(Update);
         }
 
-        public Engine AddSystem<T>() where T : ISystem
+        public Engine AddSystem<T>() where T : BaseSystem
         {
             T sys = Activator.CreateInstance<T>();
             return AddSystem(sys);
         }
 
-        private Engine AddSystem(ISystem system)
+        private Engine AddSystem(BaseSystem system)
         {
+            system.context = context;
+
+            if(system is ISystemBootstrap bootstrap)
+            {
+                bootstrap.InitContext();
+            }
+
             if(system is ICompositeSystem composite)
             {
                 foreach(var sub in composite.GetSystems())
@@ -119,7 +127,11 @@ namespace RockyECS
 
                 foreach (var s in updatingSystems)
                 {
-                    s.Update(cachedSelections[s], timeStep);
+                    Selection sel = cachedSelections[s];
+                    if(sel.Any())
+                    {
+                        s.Update(sel, timeStep);
+                    }
                 }
 
                 int frameCount = UnityEngine.Time.frameCount;

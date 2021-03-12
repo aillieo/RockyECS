@@ -65,7 +65,7 @@ namespace RockyECS
 
         public IEnumerator<Entity> GetEnumerator()
         {
-            return this.Select().GetEnumerator();
+            return Select().GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()

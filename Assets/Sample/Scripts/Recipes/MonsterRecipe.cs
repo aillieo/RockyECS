@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Sample
 {
-    public class MonsterRecipe : Recipe
+    public class MonsterRecipe : IRecipe
     {
-        public override void Setup(Entity e, Context context)
+        public void Setup(Entity e, Context context)
         {
             e.AddComp<C_IdentifyMonster>();
             C_Position position = e.AddComp<C_Position>();

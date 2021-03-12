@@ -1,30 +1,27 @@
-using RockyECS;
 using System;
 using System.Collections.Generic;
 
 namespace Sample
 {
-    public abstract class Recipe
+    public abstract class Recipes
     {
-        public abstract void Setup(Entity e, Context context);
+        private static readonly Dictionary<string, IRecipe> collection = new Dictionary<string, IRecipe>(StringComparer.OrdinalIgnoreCase);
 
-        private static readonly Dictionary<string, Recipe> collection = new Dictionary<string, Recipe>(StringComparer.OrdinalIgnoreCase);
-
-        public static T Get<T>() where T : Recipe, new()
+        public static T Get<T>() where T : class, IRecipe
         {
-            Recipe recipe = default;
+            IRecipe recipe = default;
             string typeName = typeof(T).FullName;
             if (!collection.TryGetValue(typeName, out recipe))
             {
-                recipe = new T();
+                recipe = Activator.CreateInstance(typeof(T)) as IRecipe;
                 collection.Add(typeName, recipe);
             }
             return recipe as T;
         }
 
-        public static Recipe Get(string recipeName)
+        public static IRecipe Get(string recipeName)
         {
-            Recipe recipe = default;
+            IRecipe recipe = default;
             if (!collection.TryGetValue(recipeName, out recipe))
             {
                 Type t = Type.GetType(recipeName);
@@ -32,7 +29,7 @@ namespace Sample
                 {
                     throw new Exception($"无效的recipeName {recipeName}");
                 }
-                recipe = Activator.CreateInstance(t) as Recipe;
+                recipe = Activator.CreateInstance(t) as IRecipe;
                 collection.Add(recipeName, recipe);
             }
             return recipe;

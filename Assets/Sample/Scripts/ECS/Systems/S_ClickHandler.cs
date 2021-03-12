@@ -29,7 +29,7 @@ namespace Sample
         {
             Vector2 position = entity.GetPosition();
 
-            Entity tower = Factory.CreateTower(CfgProxy.Instance.Get<TowerEntry>(1000), context);
+            Entity tower = context.CreateTower(CfgProxy.Instance.Get<TowerEntry>(1000));
 
             context.Remove(entity.id);
             tower.SetPosition(position);

@@ -4,7 +4,8 @@ using RockyECS;
 
 namespace Sample
 {
-    public class S_LevelLoad : BaseSystem, IFilteredUpdatingSystem
+    public class S_LevelLoad :
+        BaseSystem, IFilteredUpdatingSystem
     {
         public Filter CreateFilter()
         {
@@ -13,16 +14,7 @@ namespace Sample
 
         public void Update(Selection selection, float deltaTime)
         {
-            C_LevelData c = null;
-            if (selection.FirstOrDefault() == null)
-            {
-                Entity e = selection.context.Add();
-                c = e.AddComp<C_LevelData>();
-            }
-            else
-            {
-                c = selection.First().GetComp<C_LevelData>();
-            }
+            C_LevelData c = selection.First().GetComp<C_LevelData>();
 
             switch (c.loadingFlag)
             {
@@ -56,7 +48,7 @@ namespace Sample
                         switch (tileData.type)
                         {
                             case GameDefine.TileType.Slot:
-                                Entity slot = Factory.Create(Recipe.Get<SlotRecipe>(), selection.context);
+                                Entity slot = selection.context.Create(Recipes.Get<SlotRecipe>());
                                 slot.SetPosition(tileData.position);
                                 break;
                             default:

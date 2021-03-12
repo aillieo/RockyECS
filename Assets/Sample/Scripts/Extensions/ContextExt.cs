@@ -3,19 +3,19 @@ using System;
 
 namespace Sample
 {
-    public static class Factory
+    public static class ContextExt
     {
-        public static Entity Create(Recipe recipe, Context context)
+        public static Entity Create(this Context context, IRecipe recipe)
         {
             Entity entity = context.Add();
             recipe.Setup(entity, context);
             return entity;
         }
 
-        public static Entity CreateTower(TowerEntry towerEntry, Context context)
+        public static Entity CreateTower(this Context context, TowerEntry towerEntry)
         {
             Entity tower = context.Add();
-            Recipe recipe = Recipe.Get<TowerRecipe>();
+            IRecipe recipe = Recipes.Get<TowerRecipe>();
             if (recipe == null)
             {
                 throw new Exception($"获取 {nameof(TowerRecipe)}失败 {towerEntry.recipe}");
@@ -26,10 +26,10 @@ namespace Sample
             return tower;
         }
 
-        public static Entity CreateMonster(MonsterEntry monsterEntry, Context context)
+        public static Entity CreateMonster(this Context context, MonsterEntry monsterEntry)
         {
             Entity monster = context.Add();
-            Recipe recipe = Recipe.Get<MonsterRecipe>();
+            IRecipe recipe = Recipes.Get<MonsterRecipe>();
             if (recipe == null)
             {
                 throw new Exception($"获取 {nameof(MonsterRecipe)}失败 {monsterEntry.recipe}");

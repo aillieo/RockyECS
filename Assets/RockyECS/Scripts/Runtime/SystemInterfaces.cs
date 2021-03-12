@@ -2,13 +2,9 @@ using System.Collections.Generic;
 
 namespace RockyECS
 {
-    public interface ISystem
+    public interface ISystemBootstrap
     {
-    }
-
-    public interface ISystemOneShot
-    {
-
+        void InitContext();
     }
 
     public interface ISelectionProvider
@@ -16,28 +12,28 @@ namespace RockyECS
         Filter CreateFilter();
     }
 
-    public interface IUpdatingSystem : ISystem
-    {
-        void Update(float deltaTime);
-    }
+    //public interface ISelectionProvider
+    //{
+    //    Filter[] CreateFilters();
+    //}
 
-    public interface IFrameUpdatingSystem : ISystem
-    {
-        void FrameUpdate(float deltaTime);
-    }
-
-    public interface IFilteredUpdatingSystem : ISystem, ISelectionProvider
+    public interface IFilteredUpdatingSystem : ISelectionProvider
     {
         void Update(Selection selection, float deltaTime);
     }
 
-    public interface IFilteredFrameUpdatingSystem : ISystem, ISelectionProvider
+    //public interface IFilteredUpdatingSystem : ISelectionProvider
+    //{
+    //    void Update(IReadOnlyList<Selection> selections, float deltaTime);
+    //}
+
+    public interface IFilteredFrameUpdatingSystem : ISelectionProvider
     {
         void FrameUpdate(Selection selection, float deltaTime);
     }
 
-    public interface ICompositeSystem : ISystem
+    public interface ICompositeSystem
     {
-        IEnumerable<ISystem> GetSystems();
+        IEnumerable<BaseSystem> GetSystems();
     }
 }

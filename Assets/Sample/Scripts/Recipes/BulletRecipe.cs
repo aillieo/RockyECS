@@ -2,9 +2,9 @@ using RockyECS;
 
 namespace Sample
 {
-    public class BulletRecipe : Recipe
+    public class BulletRecipe : IRecipe
     {
-        public override void Setup(Entity e, Context context)
+        public void Setup(Entity e, Context context)
         {
             e.AddComp<C_Position>();
             e.AddComp<C_Rotation>();
