@@ -4,14 +4,17 @@ namespace Sample
 {
     public class S_LevelCleanUp : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter CreateFilter()
+        public Filter[] CreateFilters()
         {
-            return new Filter<C_LevelCleanUp>();
+            return new Filter[]
+            {
+                new Filter<C_LevelCleanUp>()
+            };
         }
 
-        public void Update(Selection selection, float deltaTime)
+        public void Update(int filterIndex, Selection selection, float deltaTime)
         {
-           
+
         }
     }
 }

@@ -4,12 +4,15 @@ namespace Sample
 {
     public class S_MoveByDirection : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter CreateFilter()
+        public Filter[] CreateFilters()
         {
-            return new Filter<C_MoveByDirection>();
+            return new Filter[]
+            {
+                new Filter<C_MoveByDirection>()
+            };
         }
 
-        public void Update(Selection selection, float deltaTime)
+        public void Update(int filterIndex, Selection selection, float deltaTime)
         {
         }
     }

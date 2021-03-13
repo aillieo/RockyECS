@@ -7,12 +7,15 @@ namespace Sample
     public class S_LevelLoad :
         BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter CreateFilter()
+        public Filter[] CreateFilters()
         {
-            return new Filter<C_LevelData>();
+            return new Filter[]
+            {
+                new Filter<C_LevelData>()
+            };
         }
 
-        public void Update(Selection selection, float deltaTime)
+        public void Update(int filterIndex, Selection selection, float deltaTime)
         {
             C_LevelData c = selection.First().GetComp<C_LevelData>();
 
