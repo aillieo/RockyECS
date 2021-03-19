@@ -6,58 +6,55 @@ namespace Sample
 {
     public class S_TowerFindTarget : BaseSystem, IFilteredUpdatingSystem
     {
-
-        private IEnumerable<Entity> monsters;
-
-        public Filter[] CreateFilters()
+        public Filter CreateFilter()
         {
-            return new Filter[]
-            {
-                new Filter<C_IdentifyMonster>(),
-                new Filter<C_TowerFindTarget>()
-            };
+            return new Filter<C_TowerFindTarget>();
         }
 
-        public void Update(int filterIndex, Selection selection, float deltaTime)
+        public void Update(Selection selection, float deltaTime)
         {
-            switch (filterIndex)
+            foreach (var s in selection)
             {
-                case 0:
-                    monsters = selection;
-                    break;
-                case 1:
-                    foreach (var s in selection)
-                    {
-                        C_TowerFindTarget c = s.GetComp<C_TowerFindTarget>();
-                        C_Target cTarget = s.GetComp<C_Target>();
+                C_TowerFindTarget c = s.GetComp<C_TowerFindTarget>();
 
-                        if (Entity.IsNullOrInvalid(cTarget.TargetAsEntity(selection.context)))
+                C_Target cTarget = s.GetComp<C_Target>();
+
+                if (Entity.IsNullOrInvalid(cTarget.TargetAsEntity(selection.context)))
+                {
+                    using (var scope = ListPool<Entity>.GetAutoRecycleScope())
+                    {
+                        List<Entity> list = scope.Get();
+                        selection.context.Find<C_IdentifyMonster>(e =>
                         {
-                            foreach (var m in monsters)
+                            if ((e.GetPosition() - s.GetPosition()).sqrMagnitude <= c.range * c.range)
                             {
-                                if ((m.GetPosition() - s.GetPosition()).sqrMagnitude <= c.range * c.range)
-                                {
-                                    cTarget.target = m.id;
-                                    return;
-                                }
+                                return true;
                             }
-                        }
-                        else
+
+                            return false;
+                        }, list, 1);
+
+                        if (list.Count > 0)
                         {
-                            if ((cTarget.TargetAsEntity(selection.context).GetPosition() - s.GetPosition()).sqrMagnitude > c.range * c.range)
-                            {
-                                cTarget.target = Entity.invalid;
-                            }
-                            else
-                            {
-                                s.SetRotation((cTarget.TargetAsEntity(selection.context).GetPosition() - s.GetPosition()).ToRotation());
-                            }
+                            cTarget.target = list[0].id;
                         }
                     }
-                    break;
-                default:
-                    break;
+                }
+                else
+                {
+                    if ((cTarget.TargetAsEntity(selection.context).GetPosition() - s.GetPosition()).sqrMagnitude > c.range * c.range)
+                    {
+                        cTarget.target = Entity.invalid;
+                    }
+                    else
+                    {
+                        s.SetRotation((cTarget.TargetAsEntity(selection.context).GetPosition() - s.GetPosition()).ToRotation());
+                    }
+                }
+
+
             }
         }
     }
+
 }

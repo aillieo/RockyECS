@@ -8,15 +8,12 @@ namespace Sample
 {
     public class S_BulletHit : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter[] CreateFilters()
+        public Filter CreateFilter()
         {
-            return new []
-            {
-                new Filter<C_BulletHitTargetAlways>() & new Filter<C_MoveEnd>() & new Filter<C_Target>()
-            };
+            return new Filter<C_BulletHitTargetAlways>() & new Filter<C_MoveEnd>() & new Filter<C_Target>();
         }
 
-        public void Update(int filterIndex, Selection selection, float deltaTime)
+        public void Update(Selection selection, float deltaTime)
         {
             foreach (var s in selection)
             {

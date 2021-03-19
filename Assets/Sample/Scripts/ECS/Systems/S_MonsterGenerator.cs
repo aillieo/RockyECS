@@ -7,110 +7,64 @@ namespace Sample
 {
     public class S_MonsterGenerator : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter[] CreateFilters()
+        public Filter CreateFilter()
         {
-            return new Filter[]
-            {
-                new Filter<C_LevelData>()
-            };
+            return new Filter<C_MonsterGenerator>();
         }
 
-        public void Update(int filterIndex, Selection selection, float deltaTime)
+        public void Update(Selection selection, float deltaTime)
         {
             foreach (var s in selection)
             {
             }
 
             Entity e = selection.First();
-            C_LevelData c = e.GetComp<C_LevelData>();
+            C_MonsterGenerator c = e.GetComp<C_MonsterGenerator>();
 
-            if(c.loadingFlag < 50)
-            {
-                if(c.loadingFlag == 49)
-                {
-                    InitMonsters(c.monsterSequences);
-                }
-
-                return;
-            }
-
-            Update(deltaTime);
-        }
-
-        public int totalWaves { get; private set; }
-
-        public int currentWave { get; private set; }
-
-        public float timeForNextWave { get; private set; }
-
-        private float timer;
-        private int counter;
-
-        private List<LevelEntry.Wave> monsterSequences;
-        private LevelEntry.Wave current;
-
-        public void InitMonsters(List<LevelEntry.Wave> monsterSequences)
-        {
-            this.monsterSequences = monsterSequences;
-            totalWaves = monsterSequences.Count;
-            currentWave = 0;
-            current = monsterSequences[currentWave];
-        }
-
-
-        private void ResetCounter()
-        {
-            timeForNextWave = current.delay;
-            timer = 0;
-            counter = 0;
-        }
-
-        private void Update(float deltaTime)
-        {
-            if (current == null)
+            if (c.current == null)
             {
                 return;
             }
 
-            if (timeForNextWave > 0)
+            if (c.timeForNextWave > 0)
             {
-                timeForNextWave -= deltaTime;
-                if (timeForNextWave > 0)
+                c.timeForNextWave -= deltaTime;
+                if (c.timeForNextWave > 0)
                 {
                     return;
                 }
             }
 
-            if (timeForNextWave < 0)
+            if (c.timeForNextWave < 0)
             {
-                float fixTime = -timeForNextWave;
-                timeForNextWave = 0;
-                timer = fixTime;
+                float fixTime = -c.timeForNextWave;
+                c.timeForNextWave = 0;
+                c.timer = fixTime;
                 return;
             }
 
-            timer += deltaTime;
+            c.timer += deltaTime;
 
-            while (timer > current.interval)
+            while (c.timer > c.current.interval)
             {
-                timer -= current.interval;
+                c.timer -= c.current.interval;
 
-                MonsterEntry mm = CfgProxy.Instance.Get<MonsterEntry>(current.monsterID);
+                MonsterEntry mm = CfgProxy.Instance.Get<MonsterEntry>(c.current.monsterID);
                 Entity monster = context.CreateMonster(mm);
 
-                counter++;
+                c.counter++;
 
-                if (counter == current.count)
+                if (c.counter == c.current.count)
                 {
-                    if (currentWave < monsterSequences.Count - 1)
+                    if (c.currentWave < c.monsterSequences.Count - 1)
                     {
-                        currentWave++;
-                        current = monsterSequences[currentWave];
-                        ResetCounter();
+                        c.currentWave++;
+                        c.current = c.monsterSequences[c.currentWave];
+                        c.ResetCounter();
                     }
                     else
                     {
-                        current = null;
+                        c.current = null;
                     }
 
                     break;

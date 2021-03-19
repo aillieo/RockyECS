@@ -5,15 +5,12 @@ namespace Sample
 {
     public class S_MoveToTarget : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter[] CreateFilters()
+        public Filter CreateFilter()
         {
-            return new Filter[]
-            {
-                new Filter<C_MoveToTarget>()
-            };
+            return new Filter<C_MoveToTarget>();
         }
 
-        public void Update(int filterIndex, Selection selection, float deltaTime)
+        public void Update(Selection selection, float deltaTime)
         {
             foreach (var s in selection)
             {

@@ -4,15 +4,12 @@ namespace Sample
 {
     public class S_TowerAttack : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter[] CreateFilters()
+        public Filter CreateFilter()
         {
-            return new Filter[]
-            {
-                new Filter<C_TowerAttack>()
-            };
+            return new Filter<C_TowerAttack>();
         }
 
-        public void Update(int filterIndex, Selection selection, float deltaTime)
+        public void Update(Selection selection, float deltaTime)
         {
             foreach (var s in selection)
             {

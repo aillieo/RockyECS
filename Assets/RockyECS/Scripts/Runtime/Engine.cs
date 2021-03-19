@@ -2,8 +2,6 @@ using AillieoUtils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using AillieoUtils.TypeExt;
-using UnityEngine;
 
 namespace RockyECS
 {
@@ -13,6 +11,8 @@ namespace RockyECS
 
         public bool isPlaying = true;
 
+        private readonly Event<float> evt = new Event<float>();
+
         private float timer;
         private int frame;
         private float frameTimer;
@@ -21,8 +21,9 @@ namespace RockyECS
         private readonly List<BaseSystem> systems = new List<BaseSystem>();
 
         private readonly List<IFilteredUpdatingSystem> updatingSystems = new List<IFilteredUpdatingSystem>();
+        private readonly List<IFilteredFrameUpdatingSystem> frameUpdatingSystems = new List<IFilteredFrameUpdatingSystem>();
 
-        private readonly Dictionary<IFilteredUpdatingSystem, Selection[]> cachedSelections = new Dictionary<IFilteredUpdatingSystem, Selection[]>();
+        private readonly Dictionary<ISelectionProvider, Selection> cachedSelections = new Dictionary<ISelectionProvider, Selection>();
         private readonly Context context = new Context();
 
         public Engine()
@@ -59,11 +60,20 @@ namespace RockyECS
                 systems.Add(system);
             }
 
-            if(system is IFilteredUpdatingSystem ifus)
+            if(system is ISelectionProvider isp)
             {
-                Selection[] selections = ifus.CreateFilters().Select(f => context.CreateSelection(f)).ToArray();
-                cachedSelections.Add(ifus, selections);
-                updatingSystems.Add(ifus);
+                Selection selection = context.CreateSelection(isp.CreateFilter());
+                cachedSelections.Add(isp, selection);
+            }
+
+            if (system is IFilteredUpdatingSystem iusys)
+            {
+                updatingSystems.Add(iusys);
+            }
+
+            if (system is IFilteredFrameUpdatingSystem ifusys)
+            {
+                frameUpdatingSystems.Add(ifusys);
             }
 
             return this;
@@ -85,6 +95,21 @@ namespace RockyECS
             }
         }
 
+        public Handle<float> Schedule(Action<float> action)
+        {
+            return evt.AddListener(action);
+        }
+
+        public bool Unschedule(Handle<float> handle)
+        {
+            return evt.Remove(handle);
+        }
+
+        public void UnscheduleAllTasks()
+        {
+            evt.RemoveAllListeners();
+        }
+
         private void Update()
         {
             if(!isPlaying)
@@ -98,19 +123,32 @@ namespace RockyECS
             {
                 timer -= timeStep;
 
+                evt.Invoke(timeStep);
+
                 foreach (var s in updatingSystems)
                 {
-                    Selection[] ss = cachedSelections[s];
-                    for (int i = 0; i < ss.Length; ++i)
+                    Selection sel = cachedSelections[s];
+                    if(sel.Any())
                     {
-                        Selection sel = ss[i];
-                        if(sel.Any())
-                        {
-                            s.Update(i, sel, timeStep);
-                        }
+                        s.Update(sel, timeStep);
                     }
                 }
+
+                int frameCount = UnityEngine.Time.frameCount;
+                if (frame != frameCount)
+                {
+                    frame = frameCount;
+                    float frameDeltaTime = timer - frameTimer;
+                    frameTimer = timer;
+
+                    foreach (var s in frameUpdatingSystems)
+                    {
+                        s.FrameUpdate(cachedSelections[s], frameDeltaTime);
+                    }
+                }
+
             }
         }
     }
+
 }

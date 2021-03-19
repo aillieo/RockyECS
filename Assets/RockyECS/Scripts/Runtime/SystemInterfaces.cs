@@ -7,10 +7,29 @@ namespace RockyECS
         void InitContext();
     }
 
-    public interface IFilteredUpdatingSystem
+    public interface ISelectionProvider
     {
-        Filter[] CreateFilters();
-        void Update(int filterIndex, Selection selection, float deltaTime);
+        Filter CreateFilter();
+    }
+
+    //public interface ISelectionProvider
+    //{
+    //    Filter[] CreateFilters();
+    //}
+
+    public interface IFilteredUpdatingSystem : ISelectionProvider
+    {
+        void Update(Selection selection, float deltaTime);
+    }
+
+    //public interface IFilteredUpdatingSystem : ISelectionProvider
+    //{
+    //    void Update(IReadOnlyList<Selection> selections, float deltaTime);
+    //}
+
+    public interface IFilteredFrameUpdatingSystem : ISelectionProvider
+    {
+        void FrameUpdate(Selection selection, float deltaTime);
     }
 
     public interface ICompositeSystem

@@ -1,56 +1,35 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using AillieoUtils;
 using RockyECS;
 
 namespace Sample
 {
-    public class S_MainGUIDrawer : BaseSystem, IFilteredUpdatingSystem
+    public class S_MainGUIDrawer : BaseSystem, IFilteredFrameUpdatingSystem
     {
         private Handle handle;
         private List<Action> guiActions = new List<Action>();
-        private bool isNewFrame = false;
 
         public S_MainGUIDrawer()
         {
             handle = IMGUIDrawer.Instance.guiEvent.AddListener(OnGUI);
         }
 
-        public Filter[] CreateFilters()
+        public Filter CreateFilter()
         {
-            return new[]
-            {
-                new Filter<C_FrameIndex>(),
-                new Filter<C_PlayerProperties>() | new Filter<C_LevelData>()
-            };
+            return new Filter<C_PlayerProperties>() | new Filter<C_LevelData>();
         }
 
-        public void Update(int filterIndex, Selection selection, float deltaTime)
+        public void FrameUpdate(Selection selection, float deltaTime)
         {
-            switch (filterIndex)
+            guiActions.Clear();
+
+            foreach (var e in selection)
             {
-                case 0:
-                    isNewFrame = selection.First().GetComp<C_FrameIndex>().newFrame;
-                    break;
-                case 1:
-                    if (!isNewFrame)
-                    {
-                        return;
-                    }
+                guiActions.Add(() => {
 
-                    guiActions.Clear();
-
-                    foreach (var e in selection)
-                    {
-                        guiActions.Add(() => {
-
-                        });
-                    }
-
-                    break;
+                });
             }
-
         }
 
         private void OnGUI()
