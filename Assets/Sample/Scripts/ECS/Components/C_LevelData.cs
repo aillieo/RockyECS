@@ -5,8 +5,7 @@ namespace Sample
 {
     public class C_LevelData : IComponent
     {
-        public int loadingPercent;
-        public bool isDone;
+        public int loadingFlag;
         public LevelEntry.MapData mapData;
         public LevelEntry level;
 
@@ -15,8 +14,7 @@ namespace Sample
 
         public void Reset()
         {
-            isDone = false;
-            loadingPercent = 0;
+            loadingFlag = 0;
             mapData = null;
             level = null;
             paths.Clear();

@@ -1,19 +1,41 @@
+using System.Linq;
 using RockyECS;
 
 namespace Sample
 {
-    public class S_ClickCleanUp : BaseSystem, IFilteredFrameUpdatingSystem
+    public class S_ClickCleanUp : BaseSystem, IFilteredUpdatingSystem
     {
-        public Filter CreateFilter()
+
+        private bool isNewFrame = false;
+
+        public Filter[] CreateFilters()
         {
-            return new Filter<C_ClickEvent>();
+            return new Filter[]
+            {
+                new Filter<C_FrameIndex>(),
+                new Filter<C_ClickEvent>()
+            };
         }
 
-        public void FrameUpdate(Selection selection, float deltaTime)
+        public void Update(int filterIndex, Selection selection, float deltaTime)
         {
-            foreach (var s in selection)
+            switch (filterIndex)
             {
-                s.RemoveComp<C_ClickEvent>();
+                case 0:
+                    isNewFrame = selection.First().GetComp<C_FrameIndex>().newFrame;
+                    break;
+                case 1:
+                    if (!isNewFrame)
+                    {
+                        return;
+                    }
+
+                    foreach (var s in selection)
+                    {
+                        s.RemoveComp<C_ClickEvent>();
+                    }
+
+                    break;
             }
         }
     }
