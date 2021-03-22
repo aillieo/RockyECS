@@ -89,26 +89,6 @@ namespace RockyECS
             entities.Clear();
         }
 
-        // todo 未来要删掉
-        public void Find<T>(Predicate<Entity> filter, List<Entity> result, int count = int.MaxValue) where T : class, IComponent
-        {
-            result.Clear();
-            foreach(var e in entities)
-            {
-                if(e.Value.HasComp<T>())
-                {
-                    if(filter == null || filter(e.Value))
-                    {
-                        result.Add(e.Value);
-                        if (result.Count >= count)
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-
         // todo 不通过selection来取
         public Entity SelectOne<T>() where T : class, IComponent
         {

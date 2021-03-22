@@ -11,39 +11,44 @@ namespace Sample
         {
             return new Filter[]
             {
-                new Filter<C_LevelData>()
+                new Filter<C_LevelLoad>()
             };
         }
 
         public void Update(int filterIndex, Selection selection, float deltaTime)
         {
-            C_LevelData c = selection.First().GetComp<C_LevelData>();
+            Entity e = selection.First();
+            C_LevelLoad c = e.GetComp<C_LevelLoad>();
+
+            if(c.isDone)
+            {
+                e.RemoveComp(c);
+                return;
+            }
+
+            c.loadingPercent++;
+
+            C_LevelData data = null;
 
             switch (c.loadingPercent)
             {
-                case 0:
-                    c.loadingPercent++;
-                    break;
                 case 10:
-                    c.loadingPercent++;
-                    break;
-                case 11:
                     c.level = CfgProxy.Instance.Get<LevelEntry>(1);
                     c.mapData = c.level.mapData;
-                    c.loadingPercent++;
                     break;
                 case 12:
-                    c.paths.Clear();
-                    c.mapData.pathTiles.ForEach(o => c.paths.AddLast(o));
-                    c.monsterSequences.Clear();
-                    c.monsterSequences.AddRange(c.level.waveInfo.waves);
-                    c.loadingPercent++;
+                    data = e.GetComp<C_LevelData>();
+                    if(data == null)
+                    {
+                        data = e.AddComp<C_LevelData>();
+                    }
+                    data.paths.Clear();
+                    c.mapData.pathTiles.ForEach(o => data.paths.AddLast(o));
+                    data.monsterSequences.Clear();
+                    data.monsterSequences.AddRange(c.level.waveInfo.waves);
                     break;
                 case 20:
-                    var player = selection.context.Add();
-                    player.AddComp<C_PlayerProperties>();
-                    player.AddComp<C_IdentifyPlayer>();
-                    c.loadingPercent++;
+                    e.AddComp<C_PlayerProperties>();
                     break;
                 case 28:
                     foreach (var tileData in c.mapData.functionTiles)
@@ -58,7 +63,6 @@ namespace Sample
                                 break;
                         }
                     }
-                    c.loadingPercent++;
                     break;
                 case 35:
                     c.mapData.pathTiles.ForEach(o =>
@@ -71,21 +75,22 @@ namespace Sample
                         asset.mesh = "Mesh/Tile";
                         asset.material = "Materials/Default";
                     });
-                    c.loadingPercent++;
                     break;
                 case 49:
-                    Entity e = context.Add();
+                    data = e.GetComp<C_LevelData>();
+                    if (data == null)
+                    {
+                        data = e.AddComp<C_LevelData>();
+                    }
                     var mg = e.AddComp<C_MonsterGenerator>();
-                    mg.InitMonsters(c.monsterSequences);
+                    mg.InitMonsters(data.monsterSequences);
                     break;
                 case 50:
+                    c.isDone = true;
                     break;
                 default:
-                    c.loadingPercent++;
                     break;
             }
-
-            //Debug.LogError($"load {c.loadingFlag}/50");
         }
     }
 }

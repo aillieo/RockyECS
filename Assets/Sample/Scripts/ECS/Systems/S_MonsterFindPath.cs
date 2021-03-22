@@ -56,7 +56,6 @@ namespace Sample
         {
             p.hpRest -= 1;
             p.hpRest = Mathf.Max(p.hpRest, 0);
-            Debug.LogError($"c.hpRest = {p.hpRest}");
         }
     }
 }

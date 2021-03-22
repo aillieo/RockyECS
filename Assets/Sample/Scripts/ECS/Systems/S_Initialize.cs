@@ -8,7 +8,7 @@ namespace Sample
         {
             Entity entity = context.Add();
             entity.AddComp<C_FrameIndex>();
-            entity.AddComp<C_LevelData>();
+            entity.AddComp<C_LevelLoad>();
         }
     }
 }

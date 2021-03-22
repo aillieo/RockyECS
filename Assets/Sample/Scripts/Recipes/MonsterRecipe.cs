@@ -18,7 +18,6 @@ namespace Sample
             MonsterEntry monsterEntry = e.GetComp<C_MonsterConfig>().cfg;
 
             C_MonsterFindPath monsterFindPath = e.AddComp<C_MonsterFindPath>();
-            Entity level = context.SelectOne<C_LevelData>();
             monsterFindPath.target = first;
             monsterFindPath.rotating = 0;
 

@@ -48,10 +48,6 @@ namespace Sample
                     foreach (var s in selection)
                     {
                         C_Collider c = s.GetComp<C_Collider>();
-                        if (c == null)
-                        {
-                            continue;
-                        }
                         if (Vector3.ProjectOnPlane(s.GetPosition().ToVec3() - ray.origin, ray.direction).sqrMagnitude <= c.threshold * c.threshold)
                         {
                             s.AddComp<C_ClickEvent>();

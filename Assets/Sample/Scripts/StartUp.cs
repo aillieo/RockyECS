@@ -23,6 +23,7 @@ namespace Sample
                 .AddSystem<S_ClickHandler>()
                 .AddSystem<S_Rendering>()
                 .AddSystem<S_MonsterGUIDrawer>()
+                .AddSystem<S_MainGUIDrawer>()
                 .AddSystem<S_GizmosDrawer>()
                 .AddSystem<S_TowerFindTargetGizmos>()
                 .AddSystem<S_BulletHit>()

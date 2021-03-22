@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using AillieoUtils;
 using RockyECS;
+using UnityEngine;
 
 namespace Sample
 {
@@ -22,7 +23,7 @@ namespace Sample
             return new[]
             {
                 new Filter<C_FrameIndex>(),
-                new Filter<C_PlayerProperties>() | new Filter<C_LevelData>()
+                new Filter<C_PlayerProperties>() & new Filter<C_LevelData>() & new Filter<C_MonsterGenerator>()
             };
         }
 
@@ -39,14 +40,19 @@ namespace Sample
                         return;
                     }
 
+                    Entity e = selection.First();
+
+                    C_LevelData data = e.GetComp<C_LevelData>();
+                    C_PlayerProperties player = e.GetComp<C_PlayerProperties>();
+                    C_MonsterGenerator m = e.GetComp<C_MonsterGenerator>();
+
+                    Rect rect = new Rect(50, 100, 400, 100);
+                    string text = $"wave:{m.currentWave} coins:{player.coins} hp:{player.hpRest}/{player.hpMax}";
                     guiActions.Clear();
 
-                    foreach (var e in selection)
-                    {
-                        guiActions.Add(() => {
-
-                        });
-                    }
+                    guiActions.Add(() => {
+                        GUI.Label(rect, text, new GUIStyle(GUI.skin.label) { fontSize = 20 });
+                    });
 
                     break;
             }

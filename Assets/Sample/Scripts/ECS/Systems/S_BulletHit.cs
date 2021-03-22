@@ -40,10 +40,8 @@ namespace Sample
                 int value = bonus != null ? bonus.value : 0;
                 if (context.Remove(target.id))
                 {
-                    List<Entity> list = ListPool<Entity>.Get();
-                    context.Find<C_IdentifyPlayer>(null, list, 1);
-                    list.First().GetComp<C_PlayerProperties>().coins += value;
-                    ListPool<Entity>.Recycle(list);
+                    var player = context.SelectOne<C_PlayerProperties>().GetComp<C_PlayerProperties>();
+                    player.coins += value;
                 }
             }
         }
